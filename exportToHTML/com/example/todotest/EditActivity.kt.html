@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>EditActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.ls0 { height: 1px; border-width: 0; color: #4d4d4d; background-color:#4d4d4d}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EditActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.beyond_todo_list</span>
+
+<span class="s1">import android.os.Bundle</span>
+<span class="s1">import android.view.Menu</span>
+<span class="s1">import android.view.View</span>
+<span class="s1">import android.widget.EditText</span>
+<span class="s1">import com.google.android.material.floatingactionbutton.FloatingActionButton</span>
+<span class="s1">import com.google.android.material.snackbar.Snackbar</span>
+<span class="s1">import androidx.appcompat.app.AppCompatActivity</span>
+<span class="s1">import kotlinx.android.synthetic.main.activity_edit.*</span>
+<span class="s1">import kotlinx.android.synthetic.main.fragment_edit.*</span>
+
+<span class="s0">class </span><span class="s1">EditActivity : AppCompatActivity()</span><span class="s0">, </span><span class="s1">EditFragment.OnFragmentInterFaceListener</span>
+                                        <span class="s0">,</span><span class="s1">DatePickerFragment.OnDateSetListener{</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate(savedInstanceState: Bundle?) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span>
+        <span class="s1">setContentView(R.layout.activity_edit)</span>
+        <span class="s1">setSupportActionBar(findViewById(R.id.toolbar))</span>
+
+        <span class="s1">toolbar.apply {</span>
+            <span class="s1">setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)</span>
+            <span class="s1">setNavigationOnClickListener {</span>
+                <span class="s1">finish()</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+        <span class="s0">val </span><span class="s1">bundle = intent.extras!!</span>
+        <span class="s0">val </span><span class="s1">title = bundle.getString(IntentKey.TITLE.name)!!</span>
+        <span class="s0">val </span><span class="s1">deadline = bundle.getString(IntentKey.DEADLINE.name)!!</span>
+        <span class="s0">val </span><span class="s1">taskDetail = bundle.getString(IntentKey.TASK_DETAIL.name)!!</span>
+        <span class="s0">val </span><span class="s1">isCompleted = bundle.getBoolean(IntentKey.IS_COMPLETED.name)!!</span>
+        <span class="s0">val </span><span class="s1">mode = bundle.getSerializable(IntentKey.MODE_IN_EDIT.name)!! </span><span class="s0">as </span><span class="s1">ModeIntent</span>
+
+        <span class="s1">supportFragmentManager.beginTransaction()</span>
+            <span class="s1">.add(R.id.container_detail</span><span class="s0">,</span>
+        <span class="s1">EditFragment.newInstance(title</span><span class="s0">, </span><span class="s1">deadline</span><span class="s0">, </span><span class="s1">taskDetail</span><span class="s0">, </span><span class="s1">isCompleted</span><span class="s0">, </span><span class="s1">mode)</span><span class="s0">,</span>
+            <span class="s1">FragmentTag.EDIT.toString()).commit()</span>
+
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateOptionsMenu(menu: Menu?): Boolean {</span>
+        <span class="s1">menuInflater.inflate(R.menu.menu_main</span><span class="s0">, </span><span class="s1">menu)</span>
+        <span class="s1">menu!!.apply {</span>
+            <span class="s1">findItem(R.id.menu_delete).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_edit).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_register).isVisible = </span><span class="s0">false</span>
+        <span class="s1">}</span>
+        <span class="s0">return true</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s2">//    EditFragment.OnFragmentInterFaceListener, DatePicker</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDatePickerLaunched() {</span>
+        <span class="s1">DatePickerFragment().show(supportFragmentManager</span><span class="s0">, </span><span class="s1">FragmentTag.DATE_PICKER.toString())</span>
+    <span class="s1">}</span>
+
+<hr class="ls0">    <span class="s2">//    DatePickerFragment.OnDateSetListener, DatePicker</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDateListener(dateString: String) {</span>
+        <span class="s0">val </span><span class="s1">inputDateText = findViewById&lt;EditText&gt;(R.id.inputTextDeadline)</span>
+        <span class="s1">inputDateText.setText(dateString)</span>
+    <span class="s1">}</span>
+<hr class="ls0"><span class="s2">//    EditFragment.OnFragmentInterFaceListener</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDataEdited() {</span>
+        <span class="s1">finish()</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

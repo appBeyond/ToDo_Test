@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">ToDoリスト</string>
+    <string name="action_settings">アプリについて</string>
+    <string name="title_activity_edit">編集</string>
+    <string name="title_activity_detail">詳細</string>
+
+    <!-- menuのタイトル -->
+    <string name="sort">並べ替え</string>
+    <string name="delete">削除</string>
+    <string name="edit">編集</string>
+    <string name="register">登録</string>
+    <string name="calendar">カレンダー</string>
+    <string name="back">戻る</string>
+    <string name="about">このアプリについて</string>
+    <string name="textSettingExplain">基本的な使い方と説明</string>
+
+    <!-- task detail-->
+    <string name="deadline">期日</string>
+    <string name="task_detail">内容</string>
+    <string name="check_if_completed">完了</string>
+
+    <!-- Alert dialog -->
+    <string name="alert_title">確認</string>
+    <string name="alert_message">本当に削除してよいですか？</string>
+    <string name="alert_positive">はい</string>
+    <string name="alert_negative">いいえ</string>
+
+    <!-- Toast Message -->
+    <string name="toast_delete">削除されました</string>
+    <string name="toast_register">登録されました</string>
+
+    <!-- task edit-->
+    <string name="title">タイトル</string>
+    <string name="todo_detail">内容</string>
+    <string name="error">「タイトル」と「期日」は必須項目です。</string>
+    <string name="error_deadline">例: 2020/01/23 or 右ボタンから選択してください。</string>
+
+    <!--about this app -->
+    <string name="settings_explain">説明</string>
+    <string name="settings_the_day_before">前日以前に表示されます。(例: ~1/22)</string>
+    <string name="settings_today">当日に表示されます。(例: 1/23)</string>
+    <string name="settings_tommorow">翌日以降に表示されます。(例: 1/24~)</string>
+
+    <string name="settings_usage">使い方</string>
+    <string name="settings_num_1">1. Todoリスト: 右下のFabボタンをタップ</string>
+    <string name="settings_num_2">2. 編集: タイトル、日付（必須）、内容（任意）</string>
+    <string name="settings_num_3">※日付は「2020/1/23」 or 右ボタンから日付選択</string>
+    <string name="settings_num_4">3. Todoリスト: 登録された内容を確認 or 編集の場合→カードをタップ</string>
+    <string name="settings_num_5">4. 詳細: 削除の場合→ゴミ箱 or 編集の場合→編集</string>
+
+</resources>

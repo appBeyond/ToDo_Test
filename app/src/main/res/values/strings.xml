@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="action_settings">About App</string>
+    <string name="title_activity_edit">Edit</string>
+    <string name="title_activity_detail">Detail</string>
+    <string name="textSettingExplain">Basic usage and explanation.</string>
+
+
+
+    <!-- menuのタイトル -->
+    <string name="sort">Sort</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="register">Register</string>
+    <string name="calendar">Calendar</string>
+    <string name="back">Back</string>
+    <string name="about">About this App</string>
+
+    <!-- task detail-->
+    <string name="deadline">DeadLine</string>
+    <string name="task_detail">Detail</string>
+    <string name="check_if_completed">Completed</string>
+
+    <!-- Alert dialog -->
+    <string name="alert_title">Confirmation</string>
+    <string name="alert_message">Can I delete it?</string>
+    <string name="alert_positive">Yes</string>
+    <string name="alert_negative">No</string>
+
+    <!-- Toast Message -->
+    <string name="toast_delete">It was deleted</string>
+    <string name="toast_register">It was registered.</string>
+
+    <!-- task edit-->
+    <string name="title">Title</string>
+    <string name="todo_detail">TODO Detail</string>
+    <string name="error">"Title" and "DeadLine" are both required.</string>
+    <string name="error_deadline">ex:「2020/01/23」 or Select the date from the button on the right.</string>
+
+    <!--about this app -->
+    <string name="settings_the_day_before">It will be displayed after the previous day.(ex ~1/22)</string>
+    <string name="settings_today">It will be displayed on the day.(ex 1/23)</string>
+    <string name="settings_tommorow">It will be displayed the next day or later.(ex 1/24~)</string>
+    <string name="settings_explain">Explain</string>
+
+    <string name="settings_usage">Usage</string>
+    <string name="settings_num_1">1. TodoList: Press the Fab button at the bottom right,</string>
+    <string name="settings_num_2">2. Edit: After entering the title (required), date (required), and content (optional), tap the registration button on the upper right.</string>
+    <string name="settings_num_3">* Select "2020/1/23" or the right button</string>
+    <string name="settings_num_4">3. TodoList: Tap the card to check and edit the registered contents.</string>
+    <string name="settings_num_5">4. Detail: Trash button if you want to delete. If you want to edit, tap the edit button.</string>
+
+
+</resources>

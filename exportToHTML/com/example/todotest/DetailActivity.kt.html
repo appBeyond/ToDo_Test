@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>DetailActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.ls0 { height: 1px; border-width: 0; color: #4d4d4d; background-color:#4d4d4d}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+DetailActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.beyond_todo_list</span>
+
+<span class="s1">import android.content.Intent</span>
+<span class="s1">import android.os.Bundle</span>
+<span class="s1">import android.view.Menu</span>
+<span class="s1">import android.view.MenuItem</span>
+<span class="s1">import com.google.android.material.floatingactionbutton.FloatingActionButton</span>
+<span class="s1">import com.google.android.material.snackbar.Snackbar</span>
+<span class="s1">import androidx.appcompat.app.AppCompatActivity</span>
+<span class="s1">import kotlinx.android.synthetic.main.activity_edit.*</span>
+
+<span class="s0">class </span><span class="s1">DetailActivity : AppCompatActivity()</span><span class="s0">, </span><span class="s1">DetailFragment.OnDetailFragmentListener {</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate(savedInstanceState: Bundle?) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span>
+        <span class="s1">setContentView(R.layout.activity_detail)</span>
+        <span class="s1">setSupportActionBar(findViewById(R.id.toolbar))</span>
+
+
+        <span class="s1">toolbar.apply {</span>
+            <span class="s1">setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)</span>
+            <span class="s1">setNavigationOnClickListener {</span>
+                <span class="s1">finish()</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+        <span class="s0">val </span><span class="s1">bundle = intent.extras!!</span>
+        <span class="s0">val </span><span class="s1">title = bundle.getString(IntentKey.TITLE.toString())!!</span>
+        <span class="s0">val </span><span class="s1">deadline = bundle.getString(IntentKey.DEADLINE.toString())!!</span>
+        <span class="s0">val </span><span class="s1">taskDetail = bundle.getString(IntentKey.TASK_DETAIL.toString())!!</span>
+        <span class="s0">val </span><span class="s1">isCompleted = bundle.getBoolean(IntentKey.IS_COMPLETED.toString())!!</span>
+
+        <span class="s1">supportFragmentManager.beginTransaction().add(R.id.container_detail</span><span class="s0">,</span>
+        <span class="s1">DetailFragment.newInstance(title</span><span class="s0">,</span><span class="s1">deadline</span><span class="s0">, </span><span class="s1">taskDetail</span><span class="s0">, </span><span class="s1">isCompleted)</span><span class="s0">, </span><span class="s1">FragmentTag.DETAIL.toString()).commit()</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateOptionsMenu(menu: Menu?): Boolean {</span>
+        <span class="s1">menuInflater.inflate(R.menu.menu_main</span><span class="s0">, </span><span class="s1">menu)</span>
+        <span class="s1">menu!!.apply {</span>
+            <span class="s1">findItem(R.id.menu_register).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_delete).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_edit).isVisible = </span><span class="s0">false</span>
+        <span class="s1">}</span>
+        <span class="s0">return true</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onInterfaceDeleteDB() {</span>
+        <span class="s1">finish()</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onInterfaceEditDB(</span>
+        <span class="s1">title: String?</span><span class="s0">,</span>
+        <span class="s1">deadline: String?</span><span class="s0">,</span>
+        <span class="s1">taskDetail: String?</span><span class="s0">,</span>
+        <span class="s1">isCompleted: Boolean</span><span class="s0">,</span>
+        <span class="s1">mode: ModeIntent</span>
+    <span class="s1">) {</span>
+        <span class="s0">val </span><span class="s1">intent = Intent(</span><span class="s0">this</span><span class="s1">@DetailActivity</span><span class="s0">, </span><span class="s1">EditActivity::</span><span class="s0">class</span><span class="s1">.java).apply {</span>
+            <span class="s1">putExtra(IntentKey.TITLE.name</span><span class="s0">, </span><span class="s1">title)</span>
+            <span class="s1">putExtra(IntentKey.DEADLINE.name</span><span class="s0">, </span><span class="s1">deadline)</span>
+            <span class="s1">putExtra(IntentKey.TASK_DETAIL.name</span><span class="s0">, </span><span class="s1">taskDetail)</span>
+            <span class="s1">putExtra(IntentKey.IS_COMPLETED.name</span><span class="s0">, </span><span class="s1">isCompleted)</span>
+            <span class="s1">putExtra(IntentKey.MODE_IN_EDIT.name</span><span class="s0">, </span><span class="s1">mode)</span>
+        <span class="s1">}</span>
+        <span class="s1">startActivity(intent)</span>
+        <span class="s1">finish()</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

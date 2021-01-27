@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "664859586537",
+    "firebase_url": "https://messagetalking0011s.firebaseio.com",
+    "project_id": "messagetalking0011s",
+    "storage_bucket": "messagetalking0011s.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664859586537:android:15f99dd482d6c0338d6578",
+        "android_client_info": {
+          "package_name": "app.beyond.todo_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664859586537-5ploobckr9r2tps0crc14htltclin9l9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMACeSa3MX-e-5qOvCSVsR3QO3N-4HUrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664859586537-5ploobckr9r2tps0crc14htltclin9l9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664859586537:android:abd2833f6cdb138c8d6578",
+        "android_client_info": {
+          "package_name": "app.beyond.todo_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664859586537-5ploobckr9r2tps0crc14htltclin9l9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMACeSa3MX-e-5qOvCSVsR3QO3N-4HUrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664859586537-5ploobckr9r2tps0crc14htltclin9l9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

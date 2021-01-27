@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>MainActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+.s4 { color: #808080;}
+.ls0 { height: 1px; border-width: 0; color: #4d4d4d; background-color:#4d4d4d}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.beyond_todo_list</span>
+
+<span class="s1">import android.content.Intent</span>
+<span class="s1">import android.os.Bundle</span>
+<span class="s1">import com.google.android.material.floatingactionbutton.FloatingActionButton</span>
+<span class="s1">import com.google.android.material.snackbar.Snackbar</span>
+<span class="s1">import androidx.appcompat.app.AppCompatActivity</span>
+<span class="s1">import android.view.Menu</span>
+<span class="s1">import android.view.MenuItem</span>
+<span class="s1">import android.view.View</span>
+<span class="s1">import androidx.fragment.app.FragmentManager</span>
+<span class="s1">import kotlinx.android.synthetic.main.content_main.*</span>
+<span class="s1">import kotlinx.android.synthetic.main.fragment_edit.*</span>
+
+<span class="s0">class </span><span class="s1">MainActivity : AppCompatActivity()</span><span class="s0">, </span><span class="s1">EditFragment.OnFragmentInterFaceListener</span><span class="s0">,</span>
+    <span class="s1">DatePickerFragment.OnDateSetListener</span><span class="s0">, </span><span class="s1">MasterFragment.OnListFragmentInteractionListener</span>
+    <span class="s0">,</span><span class="s1">DetailFragment.OnDetailFragmentListener   {</span>
+
+    <span class="s0">var </span><span class="s1">isTwoPane: Boolean = </span><span class="s0">false</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate(savedInstanceState: Bundle?) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span>
+        <span class="s1">setContentView(R.layout.activity_main)</span>
+        <span class="s1">setSupportActionBar(findViewById(R.id.toolbar))</span>
+        <span class="s0">if</span><span class="s1">(container_detail != </span><span class="s0">null</span><span class="s1">) isTwoPane = </span><span class="s0">true</span>
+
+        <span class="s1">supportFragmentManager.beginTransaction()</span>
+            <span class="s1">.add(R.id.container_master</span><span class="s0">,</span>
+            <span class="s1">MasterFragment.newInstance(</span><span class="s2">1</span><span class="s1">)</span><span class="s0">,</span>
+                <span class="s1">FragmentTag.MASTER.toString()).commit()</span>
+
+        <span class="s1">findViewById&lt;FloatingActionButton&gt;(R.id.fab).setOnClickListener { view -&gt;</span>
+            <span class="s1">goEditScreen(</span><span class="s3">&quot;&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot;</span><span class="s0">, false, </span><span class="s1">ModeIntent.NEW_ENTRY)</span>
+        <span class="s1">}</span>
+<span class="s4">//        &quot;&quot;, &quot;&quot;, &quot;&quot;, false, ModeIntent.NEW_ENTRY</span>
+
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onResume() {</span>
+        <span class="s0">super</span><span class="s1">.onResume()</span>
+        <span class="s1">upDateTodoList()</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">private </span><span class="s0">fun </span><span class="s1">goEditScreen(title: String</span><span class="s0">, </span><span class="s1">deadline: String</span><span class="s0">, </span><span class="s1">task_Detail: String</span><span class="s0">, </span><span class="s1">is_Completed: Boolean</span>
+    <span class="s0">, </span><span class="s1">mode: ModeIntent) {</span>
+        <span class="s0">if</span><span class="s1">(isTwoPane) {</span>
+
+            <span class="s0">if</span><span class="s1">(supportFragmentManager.findFragmentByTag(FragmentTag.EDIT.toString()) == </span><span class="s0">null </span><span class="s1">&amp;&amp;</span>
+                <span class="s1">supportFragmentManager.findFragmentByTag(FragmentTag.DETAIL.toString()) == </span><span class="s0">null</span><span class="s1">) {</span>
+
+                <span class="s1">supportFragmentManager.beginTransaction()</span>
+                    <span class="s1">.add(R.id.container_detail</span><span class="s0">,</span>
+                <span class="s1">EditFragment.newInstance(title</span><span class="s0">, </span><span class="s1">deadline</span><span class="s0">, </span><span class="s1">task_Detail</span><span class="s0">, </span><span class="s1">is_Completed</span><span class="s0">, </span><span class="s1">mode)</span><span class="s0">,</span>
+                        <span class="s1">FragmentTag.EDIT.toString()).commit()</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">supportFragmentManager.beginTransaction()</span>
+                    <span class="s1">.replace(R.id.container_detail</span><span class="s0">,</span>
+                <span class="s1">EditFragment.newInstance(title</span><span class="s0">, </span><span class="s1">deadline</span><span class="s0">, </span><span class="s1">task_Detail</span><span class="s0">, </span><span class="s1">is_Completed</span><span class="s0">, </span><span class="s1">mode)</span><span class="s0">,</span>
+                        <span class="s1">FragmentTag.EDIT.toString()).commit()</span>
+            <span class="s1">}</span>
+
+            <span class="s0">return</span>
+        <span class="s1">}</span>
+        <span class="s0">val </span><span class="s1">intent = Intent(</span><span class="s0">this</span><span class="s1">@MainActivity</span><span class="s0">, </span><span class="s1">EditActivity::</span><span class="s0">class</span><span class="s1">.java).apply {</span>
+            <span class="s1">putExtra(IntentKey.TITLE.name</span><span class="s0">, </span><span class="s1">title)</span>
+            <span class="s1">putExtra(IntentKey.DEADLINE.name</span><span class="s0">, </span><span class="s1">deadline)</span>
+            <span class="s1">putExtra(IntentKey.TASK_DETAIL.name</span><span class="s0">, </span><span class="s1">task_Detail)</span>
+            <span class="s1">putExtra(IntentKey.IS_COMPLETED.name</span><span class="s0">, </span><span class="s1">is_Completed)</span>
+            <span class="s1">putExtra(IntentKey.MODE_IN_EDIT.name</span><span class="s0">, </span><span class="s1">mode)</span>
+        <span class="s1">}</span>
+        <span class="s1">startActivity(intent)</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateOptionsMenu(menu: Menu): Boolean {</span>
+        <span class="s4">// Inflate the menu; this adds items to the action bar if it is present.</span>
+        <span class="s1">menuInflater.inflate(R.menu.menu_main</span><span class="s0">, </span><span class="s1">menu)</span>
+        <span class="s1">menu.apply {</span>
+            <span class="s1">findItem(R.id.menu_delete).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_edit).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_register).isVisible = </span><span class="s0">false</span>
+        <span class="s1">}</span>
+
+        <span class="s0">return true</span>
+        <span class="s1">}</span>
+
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onOptionsItemSelected(item: MenuItem): Boolean {</span>
+        <span class="s4">// Handle action bar item clicks here. The action bar will</span>
+        <span class="s4">// automatically handle clicks on the Home/Up button, so long</span>
+        <span class="s4">// as you specify a parent activity in AndroidManifest.xml.</span>
+        <span class="s0">return when </span><span class="s1">(item.itemId) {</span>
+            <span class="s1">R.id.action_settings -&gt; </span><span class="s0">true</span>
+            <span class="s0">else </span><span class="s1">-&gt; </span><span class="s0">super</span><span class="s1">.onOptionsItemSelected(item)</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<hr class="ls0"><span class="s4">//    EditFragment.OnFragmentInterFaceListener, Fragment</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDatePickerLaunched() {</span>
+        <span class="s1">DatePickerFragment().show(supportFragmentManager</span><span class="s0">, </span><span class="s1">FragmentTag.DATE_PICKER.toString())</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s4">//    EditFragment.OnFragmentInterFaceListener</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDataEdited() {</span>
+        <span class="s1">upDateTodoList()</span>
+    <span class="s1">}</span>
+
+<hr class="ls0">    <span class="s4">//    DatePickerFragment.OnDateSetListener, DatePicker</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDateListener(dateString: String) {</span>
+        <span class="s1">inputTextDeadline.setText(dateString)</span>
+    <span class="s1">}</span>
+
+<hr class="ls0"><span class="s4">//    MasterFragment.OnListFragmentInteractionListener</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onListItemClicked(item: TodoModel) {</span>
+        <span class="s1">goDetailScreen(item.title</span><span class="s0">, </span><span class="s1">item.deadLine</span><span class="s0">, </span><span class="s1">item.taskDetail</span><span class="s0">, </span><span class="s1">item.isCompleted)</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">private </span><span class="s0">fun </span><span class="s1">goDetailScreen(</span>
+        <span class="s1">title: String</span><span class="s0">,</span>
+        <span class="s1">deadLine: String</span><span class="s0">,</span>
+        <span class="s1">taskDetail: String</span><span class="s0">,</span>
+        <span class="s1">completed: Boolean</span>
+    <span class="s1">) {</span>
+        <span class="s0">if</span><span class="s1">(isTwoPane) {</span>
+            <span class="s0">if</span><span class="s1">(supportFragmentManager.findFragmentByTag(FragmentTag.EDIT.name) == </span><span class="s0">null </span><span class="s1">&amp;&amp;</span>
+                    <span class="s1">supportFragmentManager.findFragmentByTag(FragmentTag.DETAIL.name) == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">supportFragmentManager.beginTransaction().add(R.id.container_detail</span><span class="s0">,</span>
+            <span class="s1">DetailFragment.newInstance(title</span><span class="s0">, </span><span class="s1">deadLine</span><span class="s0">, </span><span class="s1">taskDetail</span><span class="s0">, </span><span class="s1">completed)</span><span class="s0">, </span><span class="s1">FragmentTag.DETAIL.toString()).commit()</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">supportFragmentManager.beginTransaction().replace(R.id.container_detail</span><span class="s0">,</span>
+                    <span class="s1">DetailFragment.newInstance(title</span><span class="s0">, </span><span class="s1">deadLine</span><span class="s0">, </span><span class="s1">taskDetail</span><span class="s0">, </span><span class="s1">completed)</span><span class="s0">, </span><span class="s1">FragmentTag.DETAIL.toString()).commit()</span>
+            <span class="s1">}</span>
+            <span class="s0">return</span>
+        <span class="s1">}</span>
+
+        <span class="s0">val </span><span class="s1">intent = Intent(</span><span class="s0">this</span><span class="s1">@MainActivity</span><span class="s0">, </span><span class="s1">DetailActivity::</span><span class="s0">class</span><span class="s1">.java).apply {</span>
+            <span class="s1">putExtra(IntentKey.TITLE.name</span><span class="s0">, </span><span class="s1">title)</span>
+            <span class="s1">putExtra(IntentKey.DEADLINE.name</span><span class="s0">, </span><span class="s1">deadLine)</span>
+            <span class="s1">putExtra(IntentKey.TASK_DETAIL.name</span><span class="s0">, </span><span class="s1">taskDetail)</span>
+            <span class="s1">putExtra(IntentKey.IS_COMPLETED.name</span><span class="s0">, </span><span class="s1">completed)</span>
+        <span class="s1">}</span>
+        <span class="s1">startActivity(intent)</span>
+    <span class="s1">}</span>
+
+<hr class="ls0"><span class="s4">//    DetailFragment.OnDetailFragmentListener</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onInterfaceDeleteDB() {</span>
+        <span class="s1">upDateTodoList()</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">private </span><span class="s0">fun </span><span class="s1">upDateTodoList() {</span>
+        <span class="s1">supportFragmentManager.beginTransaction().</span>
+        <span class="s1">replace(R.id.container_master</span><span class="s0">,</span>
+            <span class="s1">MasterFragment.newInstance(</span><span class="s2">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">FragmentTag.MASTER.toString()).commit()</span>
+    <span class="s1">}</span><hr class="ls0">    <span class="s4">//    DetailFragment.OnDetailFragmentListener</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onInterfaceEditDB(</span>
+        <span class="s1">title: String?</span><span class="s0">,</span>
+        <span class="s1">deadline: String?</span><span class="s0">,</span>
+        <span class="s1">taskDetail: String?</span><span class="s0">,</span>
+        <span class="s1">isCompleted: Boolean</span><span class="s0">,</span>
+        <span class="s1">mode: ModeIntent</span>
+    <span class="s1">) {</span>
+        <span class="s1">goEditScreen(title!!</span><span class="s0">, </span><span class="s1">deadline!!</span><span class="s0">, </span><span class="s1">taskDetail!!</span><span class="s0">, </span><span class="s1">isCompleted</span><span class="s0">, </span><span class="s1">mode)</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

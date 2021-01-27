@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>MyMasterRecyclerViewAdapter.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6a8759;}
+.ls0 { height: 1px; border-width: 0; color: #4d4d4d; background-color:#4d4d4d}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MyMasterRecyclerViewAdapter.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.beyond_todo_list</span>
+
+<span class="s1">import androidx.recyclerview.widget.RecyclerView</span>
+<span class="s1">import android.view.LayoutInflater</span>
+<span class="s1">import android.view.View</span>
+<span class="s1">import android.view.ViewGroup</span>
+<span class="s1">import android.widget.ImageView</span>
+<span class="s1">import android.widget.TextView</span>
+
+<span class="s1">import io.realm.RealmResults</span>
+<span class="s1">import java.text.SimpleDateFormat</span>
+<span class="s1">import java.util.*</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* [RecyclerView.Adapter] that can display a [DummyItem].</span>
+ <span class="s2">* TODO: Replace the implementation with code for your data type.</span>
+ <span class="s2">*/</span>
+<span class="s0">class </span><span class="s1">MyMasterRecyclerViewAdapter(</span>
+    <span class="s1">private </span><span class="s0">val </span><span class="s1">values: RealmResults&lt;TodoModel&gt;</span><span class="s0">,</span>
+    <span class="s1">private </span><span class="s0">val </span><span class="s1">listener: MasterFragment.OnListFragmentInteractionListener?</span>
+<span class="s1">) : RecyclerView.Adapter&lt;MyMasterRecyclerViewAdapter.ViewHolder&gt;() {</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateViewHolder(parent: ViewGroup</span><span class="s0">, </span><span class="s1">viewType: Int): ViewHolder {</span>
+        <span class="s0">val </span><span class="s1">view = LayoutInflater.from(parent.context)</span>
+            <span class="s1">.inflate(R.layout.fragment_item</span><span class="s0">, </span><span class="s1">parent</span><span class="s0">, false</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">ViewHolder(view)</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onBindViewHolder(holder: ViewHolder</span><span class="s0">, </span><span class="s1">position: Int) {</span>
+        <span class="s1">holder.item = values[position]!!</span>
+        <span class="s1">holder.textViewTitle.text = values[position]!!.title</span>
+        <span class="s1">holder.textViewDeadline.text = MyApplication.appContext.getString(R.string.deadline) +</span>
+                <span class="s3">&quot; : &quot; </span><span class="s1">+  values[position]!!.deadLine</span>
+        <span class="s0">val </span><span class="s1">changedDeadline = SimpleDateFormat(</span><span class="s3">&quot;yyyy/MM/dd&quot;</span><span class="s1">).parse(values[position]!!.deadLine)!!</span>
+        <span class="s0">val </span><span class="s1">today = Date()</span>
+
+        <span class="s0">if</span><span class="s1">(today &gt;= changedDeadline) {</span>
+            <span class="s1">holder.imageStatus.setImageResource(R.drawable.ic_baseline_clear_24)</span>
+        <span class="s1">} </span><span class="s0">else  </span><span class="s1">{</span>
+            <span class="s1">holder.imageStatus.setImageResource(R.drawable.ic_baseline_emoji_emotions_24)</span>
+        <span class="s1">}</span>
+
+        <span class="s1">holder.view.setOnClickListener {</span>
+            <span class="s1">listener?.onListItemClicked(holder.item!!)</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">getItemCount(): Int = values.size</span>
+
+    <span class="s1">inner </span><span class="s0">class </span><span class="s1">ViewHolder(</span><span class="s0">val </span><span class="s1">view: View) : RecyclerView.ViewHolder(view) {</span>
+        <span class="s0">val </span><span class="s1">textViewTitle: TextView = view.findViewById(R.id.textTitle)</span>
+        <span class="s0">val </span><span class="s1">textViewDeadline: TextView = view.findViewById(R.id.textDeadline)</span>
+        <span class="s0">val </span><span class="s1">imageStatus: ImageView = view.findViewById(R.id.imageViewStatus)</span>
+
+        <span class="s0">var </span><span class="s1">item: TodoModel? = </span><span class="s0">null</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

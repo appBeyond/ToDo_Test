@@ -1,0 +1,124 @@
+<html>
+<head>
+<title>MasterFragment.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+.s5 { color: #6a8759;}
+.ls0 { height: 1px; border-width: 0; color: #4d4d4d; background-color:#4d4d4d}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MasterFragment.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.beyond_todo_list</span>
+
+<span class="s1">import android.content.Context</span>
+<span class="s1">import android.os.Bundle</span>
+<span class="s1">import android.view.*</span>
+<span class="s1">import android.widget.Toast</span>
+<span class="s1">import androidx.fragment.app.Fragment</span>
+<span class="s1">import androidx.recyclerview.widget.GridLayoutManager</span>
+<span class="s1">import androidx.recyclerview.widget.LinearLayoutManager</span>
+<span class="s1">import androidx.recyclerview.widget.RecyclerView</span>
+<span class="s1">import io.realm.Realm</span>
+<span class="s1">import io.realm.RealmResults</span>
+<span class="s1">import io.realm.Sort</span>
+<span class="s1">import java.lang.RuntimeException</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* A fragment representing a list of Items.</span>
+ <span class="s2">*/</span>
+<span class="s0">class </span><span class="s1">MasterFragment : Fragment() {</span>
+
+    <span class="s1">private </span><span class="s0">var </span><span class="s1">columnCount = </span><span class="s3">1</span>
+    <span class="s1">private </span><span class="s0">var </span><span class="s1">listener: OnListFragmentInteractionListener? = </span><span class="s0">null</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate(savedInstanceState: Bundle?) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span>
+
+        <span class="s1">arguments?.let {</span>
+            <span class="s1">columnCount = it.getInt(ARG_COLUMN_COUNT)</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateView(</span>
+        <span class="s1">inflater: LayoutInflater</span><span class="s0">, </span><span class="s1">container: ViewGroup?</span><span class="s0">,</span>
+        <span class="s1">savedInstanceState: Bundle?</span>
+    <span class="s1">): View? {</span>
+        <span class="s0">val </span><span class="s1">view = inflater.inflate(R.layout.fragment_item_list</span><span class="s0">, </span><span class="s1">container</span><span class="s0">, false</span><span class="s1">)</span>
+        <span class="s1">setHasOptionsMenu(</span><span class="s0">true</span><span class="s1">)</span>
+
+        <span class="s4">// Set the adapter</span>
+        <span class="s0">if </span><span class="s1">(view </span><span class="s0">is </span><span class="s1">RecyclerView) {</span>
+            <span class="s1">with(view) {</span>
+                <span class="s1">layoutManager = </span><span class="s0">when </span><span class="s1">{</span>
+                    <span class="s1">columnCount &lt;= </span><span class="s3">1 </span><span class="s1">-&gt; LinearLayoutManager(context)</span>
+                    <span class="s0">else </span><span class="s1">-&gt; GridLayoutManager(context</span><span class="s0">, </span><span class="s1">columnCount)</span>
+                <span class="s1">}</span>
+                <span class="s0">val </span><span class="s1">realm = Realm.getDefaultInstance()</span>
+                <span class="s0">val </span><span class="s1">results = realm.where(TodoModel::</span><span class="s0">class</span><span class="s1">.java)</span>
+                    <span class="s1">.equalTo(TodoModel::isCompleted.name</span><span class="s0">, false</span><span class="s1">)</span>
+                    <span class="s1">.sort(TodoModel::deadLine.name</span><span class="s0">, </span><span class="s1">Sort.ASCENDING)</span>
+                    <span class="s1">.findAll()</span>
+
+
+                <span class="s1">adapter = MyMasterRecyclerViewAdapter(results</span><span class="s0">, </span><span class="s1">listener)</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">view</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateOptionsMenu(menu: Menu</span><span class="s0">, </span><span class="s1">inflater: MenuInflater) {</span>
+        <span class="s0">super</span><span class="s1">.onCreateOptionsMenu(menu</span><span class="s0">, </span><span class="s1">inflater)</span>
+        <span class="s1">menu!!.apply {</span>
+            <span class="s1">findItem(R.id.menu_register).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_edit).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.menu_delete).isVisible = </span><span class="s0">false</span>
+            <span class="s1">findItem(R.id.action_settings).isVisible = </span><span class="s0">true</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onOptionsItemSelected(item: MenuItem): Boolean {</span>
+        <span class="s0">if</span><span class="s1">(item!!.itemId == R.id.action_settings) {</span>
+            <span class="s1">Toast.makeText(activity</span><span class="s0">, </span><span class="s1">R.string.about_this_app</span><span class="s0">,</span><span class="s1">Toast.LENGTH_SHORT).show()</span>
+        <span class="s1">}</span>
+        <span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item)</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onAttach(context: Context) {</span>
+        <span class="s0">super</span><span class="s1">.onAttach(context)</span>
+        <span class="s0">if</span><span class="s1">(context </span><span class="s0">is </span><span class="s1">OnListFragmentInteractionListener) {</span>
+            <span class="s1">listener = context</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">throw </span><span class="s1">RuntimeException(</span><span class="s5">&quot;</span><span class="s0">$</span><span class="s1">context </span><span class="s5">must implement OnArticleSelectedListener&quot;</span><span class="s1">)</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<hr class="ls0">    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDetach() {</span>
+        <span class="s0">super</span><span class="s1">.onDetach()</span>
+        <span class="s1">listener = </span><span class="s0">null</span>
+    <span class="s1">}</span>
+
+    <span class="s0">interface </span><span class="s1">OnListFragmentInteractionListener {</span>
+        <span class="s0">fun </span><span class="s1">onListItemClicked(item: TodoModel)</span>
+    <span class="s1">}</span>
+    <span class="s1">companion </span><span class="s0">object </span><span class="s1">{</span>
+
+        <span class="s4">// TODO: Customize parameter argument names</span>
+        <span class="s1">const </span><span class="s0">val </span><span class="s1">ARG_COLUMN_COUNT = </span><span class="s5">&quot;column-count&quot;</span>
+<hr class="ls0">        <span class="s4">// TODO: Customize parameter initialization</span>
+        <span class="s1">@JvmStatic</span>
+        <span class="s0">fun </span><span class="s1">newInstance(columnCount: Int) =</span>
+            <span class="s1">MasterFragment().apply {</span>
+                <span class="s1">arguments = Bundle().apply {</span>
+                    <span class="s1">putInt(ARG_COLUMN_COUNT</span><span class="s0">, </span><span class="s1">columnCount)</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+</pre>
+</body>
+</html>
